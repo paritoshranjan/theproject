@@ -9,6 +9,7 @@
                 var subcontracts = tenderJson[key]                
                 for(var count=0;count<subcontracts.length;count++){
                     tr = document.createElement('tr');
+
                     var subcontract = subcontracts[count];
                     var checkbox = document.createElement("INPUT");
                     checkbox.type = "checkbox";
@@ -16,6 +17,7 @@
                     td.appendChild(checkbox)
                     tr.appendChild(td); 
                     for(var item in subcontract){
+                        tr.id = key + ":" + subcontract["Line Item"];
                         td = document.createElement('td');                        
                         td.innerHTML = item + " : " + subcontract[item];  
                         tr.appendChild(td);                 
@@ -31,5 +33,6 @@
 
     <table id="container" border="1">
     </table>
+    Send To: <input type="text" size="50"></input><input type="button" value="Canel"></input><input type="button" value="Send"></input>
 </body>
 </html>

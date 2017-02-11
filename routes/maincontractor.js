@@ -1,3 +1,5 @@
+
+
 exports.maincontractor = function(req, res) {
 	res.render('maincontractor', {});
 };
@@ -58,7 +60,10 @@ function parseFiles(){
 					var subcategoryfields = columns.slice(1);
 					var subcategoryheaders = headers.slice(1);
 					var subcategoryjson = {};
-					for(var i=0;i<headers.length;i++){						
+					for(var i=0;i<headers.length;i++){			
+						if(!subcategoryfields[i]){
+							subcategoryfields[i] = "N/A";
+						}				
 						subcategoryjson[subcategoryheaders[i]] = subcategoryfields[i];
 					}
 

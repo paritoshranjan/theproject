@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+ <script>
+  function cancel(){    
+    window.location.href = "/login";
+  }
+</script>
+
+
+</head>
+<body onload="init()">
+
+
+  
+  <h1>Contract Management System</h1>
+  
+
+
+  <h5><a style="float:right" href="/signout">Sign Out</a></h5>
+
+  <form action="/saveregistration" id="form1" method="post">  
+
+    <div>
+      <label for="Name">Name:</label>
+      <input type="text" name="name" id="name" required data-required-message="Name is required.">
+    </div>
+    <div>
+      <label for="Company">Company:</label>
+      <input type="text" name="company" id="company" required data-required-message="Company is required.">
+    </div>
+    <div>
+      <label for="Address">Address:</label>
+      <input type="address" name="address" id="address" required data-required-message="Address is required.">
+    </div>
+    <div>
+      <label for="Email">Email:</label>
+      <input type="text" name="email" id="email" required data-required-message="Email is required.">
+    </div>
+    <div>
+      <label for="Phone">Phone:</label>
+      <input type="text" name="phone" id="phone" required data-required-message="Phone is required.">
+    </div>      
+    <div>
+      <label for="Logo">Logo:</label>
+      <input type="text" name="logo" id="logo" required data-required-message="Logo is required.">
+    </div>         
+    <div>
+      <label for="Type">Type:</label>
+      <select  name="type" id="type">
+        <option value="maincontractor">Main-Contractor</option>
+        <option value="subcontractor">Sub-Contractor</option>        
+      </select>
+      <div class="info">
+        Select contractor type.
+      </div>
+    </div> 
+    <div>
+      <label for="Category">Category:</label>
+      <input type="text" name="category" id="category" required data-required-message="Category is required.">
+    </div>      
+    <div>
+      <label for="Password">Password:</label>
+      <input type="text" name="password" id="password" required data-required-message="Password is required.">
+    </div>  
+    <div>
+      <input type="hidden" name="from" id="from">
+      <input type="button" class="cancel" onclick="cancel()" value="Cancel" />
+      <button type="submit" form="form1">Register</button>
+    </div>
+  </form>
+
+</body>
+</html>

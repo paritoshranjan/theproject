@@ -1,0 +1,35 @@
+<html>
+<head>
+    <script>
+        function createTable(){
+            var table = document.getElementById('container'), tr, td, row, cell;
+            var tenderJson = <%- JSON.stringify(tender) %>
+            for(key in tenderJson)
+            {                
+                var subcontracts = tenderJson[key]                
+                for(var count=0;count<subcontracts.length;count++){
+                    tr = document.createElement('tr');
+                    var subcontract = subcontracts[count];
+                    var checkbox = document.createElement("INPUT");
+                    checkbox.type = "checkbox";
+                    td = document.createElement('td');
+                    td.appendChild(checkbox)
+                    tr.appendChild(td); 
+                    for(var item in subcontract){
+                        td = document.createElement('td');                        
+                        td.innerHTML = item + " : " + subcontract[item];  
+                        tr.appendChild(td);                 
+                    }
+                    table.appendChild(tr);
+                }
+            }
+        }
+    </script>
+</head>
+<!-- <%- JSON.stringify(tender) %>  -->
+<body onload="createTable()">
+
+    <table id="container" border="1">
+    </table>
+</body>
+</html>

@@ -2,27 +2,29 @@
 <head>
     <script>
         function createTable(){
+            var numheaders = 0;
             var table = document.getElementById('container'), tr, td, th, row, cell;
 
             var headerRow = document.getElementById('header')
-            addHeader("Select");
+            addHeader("Select");            
+            addHeader("Category");
 
             var tenderJson = <%- JSON.stringify(tender) %>;
 
-
             for(key in tenderJson)
             {                
-                var subcontracts = tenderJson[key]                
+                var subcontracts = tenderJson[key]                      
                 for(var count=0;count<subcontracts.length;count++){
 
-                    tr = document.createElement('tr');
-
+                    tr = document.createElement('tr');                    
                     addCheckbox(tr);
+                    addCell(tr, key);
 
                     var subcontract = subcontracts[count];
 
                     for(var item in subcontract){
-                        if(count==0){                            
+                        if(count==0 && numheaders<=Object.keys(subcontract).length){ 
+                            numheaders++;
                             addHeader(item);
                         }
                         tr.id = key + ":" + subcontract["Line Item"];

@@ -2,29 +2,55 @@
 <head>
     <script>
         function createTable(){
-            var table = document.getElementById('container'), tr, td, row, cell;
-            var tenderJson = <%- JSON.stringify(tender) %>
+            var table = document.getElementById('container'), tr, td, th, row, cell;
+
+            var headerRow = document.getElementById('header')
+            addHeader("Select");
+
+            var tenderJson = <%- JSON.stringify(tender) %>;
+
+
             for(key in tenderJson)
             {                
                 var subcontracts = tenderJson[key]                
                 for(var count=0;count<subcontracts.length;count++){
+
                     tr = document.createElement('tr');
 
+                    addCheckbox(tr);
+
                     var subcontract = subcontracts[count];
-                    var checkbox = document.createElement("INPUT");
-                    checkbox.type = "checkbox";
-                    td = document.createElement('td');
-                    td.appendChild(checkbox)
-                    tr.appendChild(td); 
+
                     for(var item in subcontract){
+                        if(count==0){                            
+                            addHeader(item);
+                        }
                         tr.id = key + ":" + subcontract["Line Item"];
-                        td = document.createElement('td');                        
-                        td.innerHTML = item + " : " + subcontract[item];  
-                        tr.appendChild(td);                 
+                        addCell(tr, subcontract[item]);                
                     }
                     table.appendChild(tr);
                 }
             }
+        }
+
+        function addCell(tr, text){
+            td = document.createElement('td');                        
+            td.innerHTML = text;  
+            tr.appendChild(td); 
+        }
+
+        function addHeader(headerText){
+            th = document.createElement('th');
+            th.innerHTML = headerText;                         
+            header.appendChild(th);
+        }
+
+        function addCheckbox(tr){
+            var checkbox = document.createElement("INPUT");
+            checkbox.type = "checkbox";
+            td = document.createElement('td');                    
+            td.appendChild(checkbox)
+            tr.appendChild(td); 
         }
     </script>
 </head>
@@ -32,7 +58,10 @@
 <body onload="createTable()">
 
     <table id="container" border="1">
+        <tr id="header">
+        </tr>
     </table>
     Send To: <input type="text" size="50"></input><input type="button" value="Canel"></input><input type="button" value="Send"></input>
 </body>
 </html>
+

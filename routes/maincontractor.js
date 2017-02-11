@@ -62,7 +62,7 @@ function parseFiles(){
 					var subcategoryjson = {};
 					for(var i=0;i<headers.length;i++){			
 						if(!subcategoryfields[i]){
-							subcategoryfields[i] = "N/A";
+							subcategoryfields[i] = "-";
 						}				
 						subcategoryjson[subcategoryheaders[i]] = subcategoryfields[i];
 					}

@@ -23,7 +23,7 @@
                     var subcontract = subcontracts[count];
 
                     for(var item in subcontract){
-                        if(count==0 && numheaders<=Object.keys(subcontract).length){ 
+                        if(count==0 && numheaders<Object.keys(subcontract).length){ 
                             numheaders++;
                             addHeader(item);
                         }

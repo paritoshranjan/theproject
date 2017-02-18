@@ -75,11 +75,20 @@ function parseFiles(){
 		}		
 	}	
 	fs = require('fs')
-	fs.writeFile('tender.json', JSON.stringify(parsedObject, null, 4), function (err,data) {
-		if (err) {
-			return console.log(err);
-		}
-		console.log("File json saved");
+	var mkdirp = require('mkdirp');	
+	var getDirName = require('path').dirname;
+
+	mkdirp(getDirName('data/mc/mc1/p1/tender.json'), function (err) {
+		if (err) return cb(err);
+
+		fs.writeFile('data/mc/mc1/tender.json', JSON.stringify(parsedObject, null, 4), function (err,data) {
+			if (err) {
+				return console.log(err);
+			}
+			console.log("File json saved");
+		});
 	});
+
+	
 	return parsedObject;
 }

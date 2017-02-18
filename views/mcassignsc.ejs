@@ -17,7 +17,7 @@
                 for(var count=0;count<subcontracts.length;count++){
 
                     tr = document.createElement('tr');                    
-                    addCheckbox(tr);
+                    var cbox = addCheckbox(tr);
                     addCell(tr, key);
 
                     var subcontract = subcontracts[count];
@@ -28,6 +28,7 @@
                             addHeader(item);
                         }
                         tr.id = key + ":" + subcontract["Line Item"];
+                        cbox.id = tr.id;
                         addCell(tr, subcontract[item]);                
                     }
                     table.appendChild(tr);
@@ -50,10 +51,38 @@
         function addCheckbox(tr){
             var checkbox = document.createElement("INPUT");
             checkbox.type = "checkbox";
+            checkbox.name="lineitems"
             td = document.createElement('td');                    
             td.appendChild(checkbox)
             tr.appendChild(td); 
+            return checkbox;
         }
+
+        function getCheckedBoxes(chkboxName){            
+            var checkboxes = document.getElementsByName(chkboxName);
+            var checkboxesChecked = [];
+
+            for(var i=0;i<checkboxes.length;i++)
+            {
+                if(checkboxes[i].checked){
+                    checkboxesChecked.push(checkboxes[i]);
+                }        
+            }   
+            return checkboxesChecked;     
+        }
+
+        function send(){
+            var lineitems = getCheckedBoxes('lineitems')
+            for(var item in lineitems){
+                alert(lineitems[item].id)
+            }   
+            var emailText = document.getElementById("scemails").value;
+            var emails = emailText.split(",");
+            for(var email in emails){
+                alert(emails[email]);
+            }
+        }
+
     </script>
 </head>
 <!-- <%- JSON.stringify(tender) %>  -->
@@ -63,7 +92,7 @@
         <tr id="header">
         </tr>
     </table>
-    Send To: <input type="text" size="50"></input><input type="button" value="Canel"></input><input type="button" value="Send"></input>
+    Send To: <input id="scemails" type="text" size="50"></input><input type="button" value="Canel"></input>
+    <input type="button" onclick="send()" value="Send"></input>
 </body>
 </html>
-

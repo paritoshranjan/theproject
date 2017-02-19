@@ -1,0 +1,116 @@
+<html>
+<head>
+    <script>
+        function createTable(){
+            var numheaders = 0;
+            var table = document.getElementById('container'), tr, td, th, row, cell;
+
+            var headerRow = document.getElementById('header')
+            addHeader("Select");            
+            addHeader("Category");
+
+            var tenderJson = <%- JSON.stringify(lineitems) %>;
+
+            for(key in tenderJson)
+            {                
+                var subcontracts = tenderJson[key]                      
+                for(var count=0;count<subcontracts.length;count++){
+
+                    tr = document.createElement('tr');                    
+                    var cbox = addCheckbox(tr);
+                    addCell(tr, key);
+
+                    var subcontract = subcontracts[count];
+
+                    for(var item in subcontract){
+                        if(count==0 && numheaders<Object.keys(subcontract).length){ 
+                            numheaders++;
+                            addHeader(item);
+                        }
+                        tr.id = key + ":" + subcontract["Line Item"];
+                        cbox.id = tr.id;
+                        addCell(tr, subcontract[item]);                
+                    }
+                    table.appendChild(tr);
+                }
+            }
+        }
+
+        function addCell(tr, text){
+            td = document.createElement('td');                        
+            td.innerHTML = text;  
+            tr.appendChild(td); 
+        }
+
+        function addHeader(headerText){
+            th = document.createElement('th');
+            th.innerHTML = headerText;                         
+            header.appendChild(th);
+        }
+
+        function addCheckbox(tr){
+            var checkbox = document.createElement("INPUT");
+            checkbox.type = "checkbox";
+            checkbox.name="lineitems"
+            td = document.createElement('td');                    
+            td.appendChild(checkbox)
+            tr.appendChild(td); 
+            return checkbox;
+        }
+
+        function getCheckedBoxes(chkboxName){            
+            var checkboxes = document.getElementsByName(chkboxName);
+            var checkboxesChecked = [];
+
+            for(var i=0;i<checkboxes.length;i++)
+            {
+                if(checkboxes[i].checked){
+                    checkboxesChecked.push(checkboxes[i]);
+                }        
+            }   
+            return checkboxesChecked;     
+        }
+
+        function send(){
+            var lineitems = getCheckedBoxes('lineitems')
+            var itemIds = "";
+            for(var item in lineitems){
+                itemIds += lineitems[item].id + "#";                
+            }   
+            
+            var emailText = document.getElementById("scemails").value;           
+
+            sendPostRequest(itemIds, emailText);
+        }
+
+        function sendPostRequest(itemIds, emailText){
+            var http = new XMLHttpRequest();
+            var url = "inviteSubcontracts";
+            var params = "itemIds="+ itemIds + "&emailText=" + emailText;
+            http.open("POST", url, true);
+
+
+            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 200) {
+                    window.location.href = "maincontractor"
+                    //alert(http.responseText);
+                }
+            }
+            http.send(params);
+        }
+
+    </script>
+</head>
+ <%- JSON.stringify(lineitems) %>  
+<body onload="createTable()">
+
+    <table id="container" border="1">
+        <tr id="header">
+        </tr>
+    </table>
+    Send To: <input id="scemails" type="text" size="50"></input><input type="button" value="Canel"></input>
+    <input type="button" onclick="send()" value="Send"></input>
+</body>
+</html>

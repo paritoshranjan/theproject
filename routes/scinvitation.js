@@ -36,11 +36,21 @@ function parseLineItemsforEmail(lineitems, res){
 }
 
 function getLineItemsFromTender(tenderJson, lineitems, res){	
+	console.log(lineitems)
 	for(var item in lineitems){
 		var lineitem = lineitems[item];		
 		var categoryAndItem = lineitem.split(":");
+		var category = categoryAndItem[0];
+		var item = categoryAndItem[1];		
+		var itemsForCategory = tenderJson[category];
+		for(var lineItemInTendor in itemsForCategory){
+			var itemInTendor = itemsForCategory[lineItemInTendor]
+			if(itemInTendor["Line Item"] == item){
+				console.log(itemInTendor);
+			}			
+		}		
 	}
-
+	
 	res.render("viewInviteForSubcontract",{"lineitems":lineitems, "email":email});
 
 }

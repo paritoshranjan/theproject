@@ -35,22 +35,33 @@ function parseLineItemsforEmail(lineitems, res){
 	
 }
 
-function getLineItemsFromTender(tenderJson, lineitems, res){	
-	console.log(lineitems)
+function getLineItemsFromTender(tenderJson, lineitems, res){		
+	var	subcontracts = {}
 	for(var item in lineitems){
+		
 		var lineitem = lineitems[item];		
 		var categoryAndItem = lineitem.split(":");
 		var category = categoryAndItem[0];
 		var item = categoryAndItem[1];		
+
+		if(!subcontracts[category]){
+			var selectedItemsForCategory = [];				
+			subcontracts[category] = selectedItemsForCategory;
+		}
+
 		var itemsForCategory = tenderJson[category];
-		for(var lineItemInTendor in itemsForCategory){
+		
+		for(var lineItemInTendor in itemsForCategory){			
 			var itemInTendor = itemsForCategory[lineItemInTendor]
+			console.log(item + " : " + itemInTendor["Line Item"]);			
 			if(itemInTendor["Line Item"] == item){
-				console.log(itemInTendor);
+				console.log("Selected")
+				selectedItemsForCategory.push(itemInTendor)		
+				subcontracts[category] = selectedItemsForCategory;										
 			}			
-		}		
-	}
+		}				
+	}	
 	
-	res.render("viewInviteForSubcontract",{"lineitems":lineitems, "email":email});
+	res.render("viewInviteForSubcontract",{"subcontracts":subcontracts});
 
 }

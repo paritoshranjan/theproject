@@ -5,34 +5,33 @@
             var numheaders = 0;
             var table = document.getElementById('container'), tr, td, th, row, cell;
 
-            var headerRow = document.getElementById('header')
-            addHeader("Select");            
+            var headerRow = document.getElementById('header')                      
             addHeader("Category");
 
-            var lineitems = <%- JSON.stringify(lineitems) %>;
-            var email = <%- JSON.stringify(email) %>;
+            
+            var subcontracts = <%- JSON.stringify(subcontracts) %>;
 
-                        
-                var subcontracts = lineitems[email]                      
-                for(var count=0;count<subcontracts.length;count++){
+            for(key in subcontracts)
+            {	
+                var lineitems = subcontracts[key]                      
+                for(var count=0;count<lineitems.length;count++){
 
-                    tr = document.createElement('tr');                    
-                    var cbox = addCheckbox(tr);
+                    tr = document.createElement('tr');                                        
                     addCell(tr, key);
 
-                    var subcontract = subcontracts[count];
+                    var lineitem = lineitems[count];
 
-                    for(var item in subcontract){
-                        if(count==0 && numheaders<Object.keys(subcontract).length){ 
+                    for(var item in lineitem){
+                        if(count==0 && numheaders<Object.keys(lineitem).length){ 
                             numheaders++;
                             addHeader(item);
                         }
-                        tr.id = key + ":" + subcontract["Line Item"];
-                        cbox.id = tr.id;
-                        addCell(tr, subcontract[item]);                
+                        tr.id = key + ":" + lineitem["Line Item"];                        
+                        addCell(tr, lineitem[item]);                
                     }
                     table.appendChild(tr);
                 }
+            }
             
         }
 
@@ -48,31 +47,7 @@
             header.appendChild(th);
         }
 
-        function addCheckbox(tr){
-            var checkbox = document.createElement("INPUT");
-            checkbox.type = "checkbox";
-            checkbox.name="lineitems"
-            td = document.createElement('td');                    
-            td.appendChild(checkbox)
-            tr.appendChild(td); 
-            return checkbox;
-        }
-
-        function getCheckedBoxes(chkboxName){            
-            var checkboxes = document.getElementsByName(chkboxName);
-            var checkboxesChecked = [];
-
-            for(var i=0;i<checkboxes.length;i++)
-            {
-                if(checkboxes[i].checked){
-                    checkboxesChecked.push(checkboxes[i]);
-                }        
-            }   
-            return checkboxesChecked;     
-        }
-
-        function send(){
-            var lineitems = getCheckedBoxes('lineitems')
+        function send(){           
             var itemIds = "";
             for(var item in lineitems){
                 itemIds += lineitems[item].id + "#";                
@@ -102,15 +77,15 @@
         }
 
     </script>
-</head>
- <%- JSON.stringify(lineitems) %>  
+</head> 
 <body onload="createTable()">
 
     <table id="container" border="1">
         <tr id="header">
         </tr>
     </table>
-    Send To: <input id="scemails" type="text" size="50"></input><input type="button" value="Canel"></input>
-    <input type="button" onclick="send()" value="Send"></input>
+    Send To: <input type="button" value="Canel"></input>
+    <input type="button" onclick="send()" value="Save"></input>
+    <input type="button" onclick="send()" value="Create Proposal"></input>
 </body>
 </html>

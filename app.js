@@ -6,6 +6,7 @@ var login = require("./routes/login");
 var register = require("./routes/register");
 var maincontractor = require("./routes/maincontractor");
 var subcontractor = require("./routes/subcontractor");
+var scinvitation = require("./routes/scinvitation");
 
 
 var bodyParser = require('body-parser');
@@ -48,7 +49,7 @@ app.post("/inviteSubcontracts", maincontractor.inviteSubcontracts);
 
 app.get("/subcontractor",subcontractor.subcontractor);
 app.get("/sclist",subcontractor.sclist);
-app.get("/viewInviteForSubcontract",subcontractor.viewInviteForSubcontract);
+app.get("/viewInviteForSubcontract",scinvitation.viewInviteForSubcontract);
 
 app.all("/*", requireLogin, function(req, res, next) {
 	next(); 

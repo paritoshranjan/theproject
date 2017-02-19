@@ -9,11 +9,11 @@
             addHeader("Select");            
             addHeader("Category");
 
-            var tenderJson = <%- JSON.stringify(lineitems) %>;
+            var lineitems = <%- JSON.stringify(lineitems) %>;
+            var email = <%- JSON.stringify(email) %>;
 
-            for(key in tenderJson)
-            {                
-                var subcontracts = tenderJson[key]                      
+                        
+                var subcontracts = lineitems[email]                      
                 for(var count=0;count<subcontracts.length;count++){
 
                     tr = document.createElement('tr');                    
@@ -33,7 +33,7 @@
                     }
                     table.appendChild(tr);
                 }
-            }
+            
         }
 
         function addCell(tr, text){

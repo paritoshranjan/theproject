@@ -113,7 +113,7 @@ function parseFiles(){
 	mkdirp(getDirName('data/mc/mc1/p1/tender.json'), function (err) {
 		if (err) return cb(err);
 
-		fs.writeFile('data/mc/mc1/tender.json', JSON.stringify(parsedObject, null, 4), function (err,data) {
+		fs.writeFile('data/mc/mc1/p1/tender.json', JSON.stringify(parsedObject, null, 4), function (err,data) {
 			if (err) {
 				return console.log(err);
 			}

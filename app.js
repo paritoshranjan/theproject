@@ -48,6 +48,7 @@ app.post("/inviteSubcontracts", maincontractor.inviteSubcontracts);
 
 app.get("/subcontractor",subcontractor.subcontractor);
 app.get("/sclist",subcontractor.sclist);
+app.get("/viewInviteForSubcontract",subcontractor.viewInviteForSubcontract);
 
 app.all("/*", requireLogin, function(req, res, next) {
 	next(); 

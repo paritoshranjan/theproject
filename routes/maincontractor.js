@@ -8,6 +8,12 @@ exports.mcnewproject = function(req, res) {
 	res.render('mcnewproject', {});
 };
 
+exports.inviteSubcontracts = function(req, res){
+	console.log(req.body.itemIds)
+	console.log(req.body.emailText)
+	res.render('maincontractor', {});
+}
+
 exports.savemcnewproject = function(req, res) {
 	console.log("Savind new project");
 

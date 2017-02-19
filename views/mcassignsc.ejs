@@ -73,14 +73,32 @@
 
         function send(){
             var lineitems = getCheckedBoxes('lineitems')
+            var itemIds = "";
             for(var item in lineitems){
-                alert(lineitems[item].id)
+                itemIds += lineitems[item].id + ":";                
             }   
-            var emailText = document.getElementById("scemails").value;
-            var emails = emailText.split(",");
-            for(var email in emails){
-                alert(emails[email]);
+            
+            var emailText = document.getElementById("scemails").value;           
+
+            sendPostRequest(itemIds, emailText);
+        }
+
+        function sendPostRequest(itemIds, emailText){
+            var http = new XMLHttpRequest();
+            var url = "inviteSubcontracts";
+            var params = "itemIds="+ itemIds + "&emailText=" + emailText;
+            http.open("POST", url, true);
+
+
+            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 200) {
+                    window.location.href = "maincontractor"
+                    //alert(http.responseText);
+                }
             }
+            http.send(params);
         }
 
     </script>

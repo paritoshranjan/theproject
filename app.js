@@ -44,6 +44,7 @@ app.post("/saveregistration", register.saveregistration);
 app.get("/maincontractor",maincontractor.maincontractor);
 app.get("/mcnewproject",maincontractor.mcnewproject);
 app.post("/savemcnewproject",maincontractor.savemcnewproject);
+app.post("/inviteSubcontracts", maincontractor.inviteSubcontracts);
 
 app.get("/subcontractor",subcontractor.subcontractor);
 app.get("/sclist",subcontractor.sclist);

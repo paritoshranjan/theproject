@@ -9,8 +9,34 @@ exports.mcnewproject = function(req, res) {
 };
 
 exports.inviteSubcontracts = function(req, res){
-	console.log(req.body.itemIds)
-	console.log(req.body.emailText)
+
+	var invitations = {};
+
+	var emails = req.body.emailText.split(",");
+	var itemIds = req.body.itemIds;
+	var lineitems = itemIds.split("#");
+	lineitems = lineitems.slice(0, lineitems.length-1)
+
+	for(var email in emails){							
+		invitations[emails[email]] = lineitems;		
+	}
+
+	fs = require('fs')
+	var mkdirp = require('mkdirp');	
+	var getDirName = require('path').dirname;
+
+	mkdirp(getDirName('data/mc/mc1/p1/invitations.json'), function (err) {
+		if (err) return cb(err);
+
+		fs.writeFile('data/mc/mc1/invitations.json', JSON.stringify(invitations, null, 4), function (err,data) {
+			if (err) {
+				return console.log(err);
+			}
+			console.log("File json saved");
+		});
+	});
+
+
 	res.render('maincontractor', {});
 }
 
